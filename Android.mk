@@ -33,7 +33,7 @@ LOCAL_SRC_FILES := $(call all-java-files-under, main/src)
 # ideally this should be called just 'objenesis', but that name is
 # already used by a prebuilt host lib.
 LOCAL_MODULE := objenesis-target
-#  SDK 9 needed for ObjectStreamClass lookupAny
-LOCAL_SDK_VERSION := 9
+#  SDK 10 needed for ObjectStreamClass lookupAny
+LOCAL_SDK_VERSION := 10
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_STATIC_JAVA_LIBRARY)
