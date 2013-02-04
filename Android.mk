@@ -37,3 +37,32 @@ LOCAL_MODULE := objenesis-target
 LOCAL_SDK_VERSION := 10
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_STATIC_JAVA_LIBRARY)
+
+#--------------------------------
+# Builds the Objenesis TCK as a device-targeted library
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := objenesis-tck-target
+LOCAL_MODULE_TAGS := tests
+
+LOCAL_STATIC_JAVA_LIBRARIES := objenesis-target
+LOCAL_SRC_FILES := $(call all-java-files-under, tck/src)
+LOCAL_JAVA_RESOURCE_DIRS := tck/src
+include $(BUILD_STATIC_JAVA_LIBRARY)
+
+# -------------------------------
+# Builds the deployable Objenesis TCK for Android
+# To build and run:
+#    make APP-ObjenesisTck
+#    adb install -r out/target/product/generic/data/app/ObjenesisTck.apk
+#    adb shell am instrument -w org.objenesis.tck.android/.TckInstrumentation
+
+LOCAL_PATH := $(LOCAL_PATH)/tck-android
+include $(CLEAR_VARS)
+LOCAL_PACKAGE_NAME := ObjenesisTck
+LOCAL_MODULE_TAGS := tests
+LOCAL_CERTIFICATE := platform
+
+LOCAL_STATIC_JAVA_LIBRARIES := objenesis-tck-target
+LOCAL_SRC_FILES := $(call all-java-files-under, src)
+include $(BUILD_PACKAGE)
